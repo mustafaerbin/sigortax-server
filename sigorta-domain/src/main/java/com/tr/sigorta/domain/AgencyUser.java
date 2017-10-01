@@ -7,32 +7,43 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 
 /**
  * Created by Mustafa Erbin on 16/09/2017.
- * Sigorta acentesi kullanıcıları.
+ * Sigorta acentesi kullanıcısı.
  */
 @Entity
-public class CompanyUser extends User {
+public class AgencyUser extends User {
 
-    public CompanyUser(Long userId) {
+    public AgencyUser(Long userId) {
         super();
         this.setOid(userId);
     }
 
-    public CompanyUser() {
+    public AgencyUser() {
         super();
     }
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company")
+    @JoinColumn(name = "agency")
     @JsonBackReference
-    private Company company;
+    private Agency agency; // acentesi
     private String email;
     private Long mobilePhone;
     private Date endDate; // kullanım bitiş tarihi.
+    private Boolean status = true; // 1 --> aktif, 0 --> pasif
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 
     public Date getEndDate() {
         return endDate;
@@ -58,11 +69,11 @@ public class CompanyUser extends User {
         this.mobilePhone = mobilePhone;
     }
 
-    public Company getCompany() {
-        return company;
+    public Agency getAgency() {
+        return agency;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setAgency(Agency agency) {
+        this.agency = agency;
     }
 }

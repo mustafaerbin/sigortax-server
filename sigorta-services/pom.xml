@@ -24,5 +24,10 @@
             <artifactId>sigorta-repository</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.tr.sigorta.dao</groupId>
+            <artifactId>sigorta-dao</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

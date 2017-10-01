@@ -11,7 +11,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 /**
  * Created by Mustafa Erbin on 03/03/2017.
  */
-
 @ComponentScan({"com.tr.sigorta", "com.tr.nebula"})
 @EnableJpaRepositories(basePackages = {"com.tr.sigorta.repository", "com.tr.nebula.security.db.repository"})
 @EntityScan(basePackages = {"com.tr.sigorta.domain",

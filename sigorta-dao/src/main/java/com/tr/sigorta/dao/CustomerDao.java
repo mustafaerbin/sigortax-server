@@ -1,7 +1,7 @@
 package com.tr.sigorta.dao;
 
 import com.tr.nebula.persistence.jpa.dao.BaseDaoImpl;
-import com.tr.sigorta.domain.CompanyUser;
+import com.tr.sigorta.domain.AgencyUser;
 import com.tr.sigorta.domain.Customer;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +17,14 @@ public class CustomerDao extends BaseDaoImpl<Customer, Long> {
     /**
      * Kullanıcıya kayıtlı müşterileri listesi.
      *
-     * @param companyUser login olan kullanıcısı
+     * @param agencyUser login olan kullanıcısı
      * @return kullanıcı listesi
      */
-    public List<Customer> findAll(CompanyUser companyUser) {
+    public List<Customer> findAll(AgencyUser agencyUser) {
         List<Customer> resultList = null;
         try {
-            Query query = entityManager.createQuery("from Customer o where o.companyUser=:companyUser")
-                    .setParameter("companyUser", companyUser);
+            Query query = entityManager.createQuery("from Customer o where o.agencyUser=:agencyUser")
+                    .setParameter("agencyUser", agencyUser);
             resultList = query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();

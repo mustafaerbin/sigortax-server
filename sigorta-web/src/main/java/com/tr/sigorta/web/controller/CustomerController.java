@@ -1,14 +1,11 @@
 package com.tr.sigorta.web.controller;
 
 import com.tr.nebula.security.api.model.SessionUser;
-import com.tr.sigorta.dao.CustomerDao;
-import com.tr.sigorta.domain.CompanyUser;
 import com.tr.sigorta.domain.Customer;
+import com.tr.sigorta.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,14 +18,26 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
-    CustomerDao customerDao;
+    CustomerService customerService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Customer> findAll(SessionUser sessionUser) {
-        CompanyUser companyUser = (CompanyUser) sessionUser.getUser();
-        List<Customer> findAll = customerDao.findAll();
-        List<Customer> findAllUser = customerDao.findAll(companyUser);
-        return findAll;
+        return customerService.findAll(sessionUser);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public Customer create(SessionUser sessionUser, @RequestBody Customer customer) {
+        return customerService.create(sessionUser, customer);
+    }
+
+    @PutMapping
+    public Customer update(SessionUser sessionUser, @RequestBody Customer customer) {
+        return customerService.update(sessionUser, customer);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "{oid}")
+    public Customer delete(@PathVariable("oid") Long id) {
+        return customerService.delete(id);
     }
 
 }

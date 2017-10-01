@@ -2,11 +2,11 @@ package com.tr.sigorta.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tr.nebula.persistence.jpa.domain.BaseEntity;
-import com.tr.nebula.security.db.domain.User;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -17,14 +17,18 @@ import java.util.Date;
 @Entity
 public class Policy extends BaseEntity {
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    private CompanyUser companyUser; // şirket kullanıcısı
+    private AgencyUser agencyUser; // acente kullanıcısı
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    private Customer customer; // şirket müşterisi
+    private Customer customer; // acente müşterisi
     @ManyToOne(fetch = FetchType.EAGER)
-    private GenericCodes policyType; // sigorta poliçesi tipi; sağlık, trafik vs..
+    private Company company;
     @ManyToOne(fetch = FetchType.EAGER)
-    private GenericCodes policyCompany; // sigorta şirketi; axa, ak, demir hayat vs..
+    private CompanyProduct companyProduct;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private CompanySubProduct companySubProduct;
     private Date startDate; // poliçe başlangıç tarihi
     private Date endDate; // poliçe bitiş tarihi
     private String description; // açıklama
@@ -34,14 +38,14 @@ public class Policy extends BaseEntity {
     private String customerMessage; // müşteriye gidecek mesaj.
     private String policyNumber; // poliçe numarası.
     private BigDecimal policyEmount; // poliçe tutarı.
-    private Long companyId; // şirket id'si
+    private Long agencyId; // sigorta şirketi id'si (acente admini bütün kullanıcıların kestiği poliçeleri görebilmesi için eklendi.)
 
-    public CompanyUser getCompanyUser() {
-        return companyUser;
+    public AgencyUser getAgencyUser() {
+        return agencyUser;
     }
 
-    public void setCompanyUser(CompanyUser companyUser) {
-        this.companyUser = companyUser;
+    public void setAgencyUser(AgencyUser agencyUser) {
+        this.agencyUser = agencyUser;
     }
 
     public Customer getCustomer() {
@@ -52,20 +56,28 @@ public class Policy extends BaseEntity {
         this.customer = customer;
     }
 
-    public GenericCodes getPolicyType() {
-        return policyType;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setPolicyType(GenericCodes policyType) {
-        this.policyType = policyType;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
-    public GenericCodes getPolicyCompany() {
-        return policyCompany;
+    public CompanyProduct getCompanyProduct() {
+        return companyProduct;
     }
 
-    public void setPolicyCompany(GenericCodes policyCompany) {
-        this.policyCompany = policyCompany;
+    public void setCompanyProduct(CompanyProduct companyProduct) {
+        this.companyProduct = companyProduct;
+    }
+
+    public CompanySubProduct getCompanySubProduct() {
+        return companySubProduct;
+    }
+
+    public void setCompanySubProduct(CompanySubProduct companySubProduct) {
+        this.companySubProduct = companySubProduct;
     }
 
     public String getDescription() {
@@ -132,11 +144,11 @@ public class Policy extends BaseEntity {
         this.policyEmount = policyEmount;
     }
 
-    public Long getCompanyId() {
-        return companyId;
+    public Long getAgencyId() {
+        return agencyId;
     }
 
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
+    public void setAgencyId(Long agencyId) {
+        this.agencyId = agencyId;
     }
 }

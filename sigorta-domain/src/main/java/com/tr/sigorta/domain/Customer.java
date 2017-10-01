@@ -1,23 +1,23 @@
 package com.tr.sigorta.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tr.nebula.persistence.jpa.domain.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 
 /**
  * Created by Mustafa Erbin on 16/09/2017.
- * Sigortacının müşterileri
+ * Acentenin müşterileri
  */
 @Entity
 public class Customer extends BaseEntity {
 
-    @JsonIgnore
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    private CompanyUser companyUser;
+    private AgencyUser agencyUser; // acente kullanıcısı
     private String name;
     private String surname;
     private Long tc;
@@ -25,7 +25,16 @@ public class Customer extends BaseEntity {
     private Long mobilePhone;
     private String address;
     private String job;
-    private Boolean status; // 1 --> aktif, 0 --> pasif
+    private Boolean status = true; // 1 --> aktif, 0 --> pasif
+    private String description; // açıklama
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Boolean getStatus() {
         return status;
@@ -35,12 +44,12 @@ public class Customer extends BaseEntity {
         this.status = status;
     }
 
-    public CompanyUser getCompanyUser() {
-        return companyUser;
+    public AgencyUser getAgencyUser() {
+        return agencyUser;
     }
 
-    public void setCompanyUser(CompanyUser companyUser) {
-        this.companyUser = companyUser;
+    public void setAgencyUser(AgencyUser agencyUser) {
+        this.agencyUser = agencyUser;
     }
 
     public String getName() {

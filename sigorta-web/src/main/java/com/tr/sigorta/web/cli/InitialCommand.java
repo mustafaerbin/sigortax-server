@@ -9,12 +9,8 @@ import com.tr.nebula.security.db.repository.NebulaMenuRepository;
 import com.tr.nebula.security.db.repository.NebulaPermissionRepository;
 import com.tr.nebula.security.db.repository.NebulaRoleRepository;
 import com.tr.nebula.security.db.repository.NebulaUserRepository;
-import com.tr.sigorta.dao.CompanyDao;
-import com.tr.sigorta.dao.CompanyUserDao;
-import com.tr.sigorta.dao.CustomerDao;
-import com.tr.sigorta.domain.Company;
-import com.tr.sigorta.domain.CompanyUser;
-import com.tr.sigorta.domain.Customer;
+import com.tr.sigorta.dao.*;
+import com.tr.sigorta.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +39,17 @@ public class InitialCommand {
     private CompanyDao companyDao;
 
     @Autowired
-    private CompanyUserDao companyUserDao;
+    private CompanyProductDao companyProductDao;
+
+    @Autowired
+    private CompanySubProductDao companySubProductDao;
+
+    @Autowired
+    private AgencyUserDao agencyUserDao;
+
+    @Autowired
+    private AgencyDao agencyDao;
+
 
     public void run() {
 
@@ -57,12 +63,12 @@ public class InitialCommand {
         roleGroupCompanyUser.setCode("USER");
         robeRoleRepository.save(roleGroupCompanyUser);
 
-        Company company1 = new Company();
-        company1.setName("Beşler Sigorta");
-        companyDao.create(company1);
+        Agency agency1 = new Agency();
+        agency1.setName("Beşler Sigorta");
+        agencyDao.create(agency1);
 
-        CompanyUser user = new CompanyUser();
-        user.setCompany(company1);
+        AgencyUser user = new AgencyUser();
+        user.setAgency(agency1);
         user.setOid(1L);
         user.setUsername("admin");
         user.setPassword("96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e");
@@ -70,8 +76,7 @@ public class InitialCommand {
         user.setName("admin");
         user.setSurname("admin");
         user.setRole(roleGroup);
-        companyUserDao.create(user);
-
+        agencyUserDao.create(user);
         robeUserRepository.save(user);
 
         User companyUser = new User();
@@ -81,7 +86,6 @@ public class InitialCommand {
         companyUser.setName("user");
         companyUser.setSurname("user");
         companyUser.setRole(roleGroupCompanyUser);
-
         robeUserRepository.save(companyUser);
 
         Menu managerMenu = new Menu();
@@ -90,7 +94,6 @@ public class InitialCommand {
         managerMenu.setModule("Manager");
         managerMenu.setIcon("fa-cogs");
         managerMenu.setIndex(1);
-
         robeMenuRepository.save(managerMenu);
 
         Menu userMenu = new Menu();
@@ -100,7 +103,6 @@ public class InitialCommand {
         userMenu.setIcon("fa-users");
         userMenu.setParent(managerMenu);
         userMenu.setIndex(1);
-
         robeMenuRepository.save(userMenu);
 
         Menu roleMenu = new Menu();
@@ -110,7 +112,6 @@ public class InitialCommand {
         roleMenu.setIcon("fa-file-text-o");
         roleMenu.setParent(managerMenu);
         roleMenu.setIndex(2);
-
         robeMenuRepository.save(roleMenu);
 
         Menu menuMenu = new Menu();
@@ -120,7 +121,6 @@ public class InitialCommand {
         menuMenu.setIcon("fa-tasks");
         menuMenu.setParent(managerMenu);
         menuMenu.setIndex(3);
-
         robeMenuRepository.save(menuMenu);
 
         Menu permissionMenu = new Menu();
@@ -130,7 +130,6 @@ public class InitialCommand {
         permissionMenu.setIcon("fa-cogs");
         permissionMenu.setParent(managerMenu);
         permissionMenu.setIndex(4);
-
         robeMenuRepository.save(permissionMenu);
 
         Menu siteMenu = new Menu();
@@ -162,7 +161,6 @@ public class InitialCommand {
         /**
          * MENU İŞLEMLERİ
          */
-
         Menu customerMenu = new Menu();
         customerMenu.setText("Müşteri Yönetimi");
         customerMenu.setPath("site/customer/Customer");
@@ -172,18 +170,93 @@ public class InitialCommand {
         customerMenu.setIndex(1);
         robeMenuRepository.save(customerMenu);
 
+        Menu policeMenu = new Menu();
+        policeMenu.setText("Poliçe Yönetimi");
+        policeMenu.setPath("site/policy/Policy");
+        policeMenu.setModule("Policy");
+        policeMenu.setIcon("fa-file-text-o");
+        policeMenu.setParent(siteMenu);
+        policeMenu.setIndex(2);
+        robeMenuRepository.save(policeMenu);
+
+        //ANA MANU PARAMETRELER
+        Menu parameterMenu = new Menu();
+        parameterMenu.setText("Parametreler");
+        parameterMenu.setPath("Parameter");
+        parameterMenu.setModule("Parameter");
+        parameterMenu.setIcon("fa-cogs");
+        parameterMenu.setIndex(3);
+        robeMenuRepository.save(parameterMenu);
+
+        Menu parameterTypeMenu = new Menu();
+        parameterTypeMenu.setText("Şirket Yönetimi");
+        parameterTypeMenu.setPath("parameter/company/Company");
+        parameterTypeMenu.setModule("Company");
+        parameterTypeMenu.setIcon("fa-cogs");
+        parameterTypeMenu.setParent(parameterMenu);
+        parameterTypeMenu.setIndex(1);
+        robeMenuRepository.save(parameterTypeMenu);
+
+        Menu parameterCodeMenu = new Menu();
+        parameterCodeMenu.setText("Şirket Ürün Yönetimi");
+        parameterCodeMenu.setPath("parameter/companyProduct/CompanyProduct");
+        parameterCodeMenu.setModule("CompanyProduct");
+        parameterCodeMenu.setIcon("fa-cogs");
+        parameterCodeMenu.setParent(parameterMenu);
+        parameterCodeMenu.setIndex(2);
+        robeMenuRepository.save(parameterCodeMenu);
+
+        Menu parameterCompanySubProduct = new Menu();
+        parameterCompanySubProduct.setText("Şirket Alt Ürün Yönetimi");
+        parameterCompanySubProduct.setPath("parameter/companySubProduct/CompanySubProduct");
+        parameterCompanySubProduct.setModule("CompanySubProduct");
+        parameterCompanySubProduct.setIcon("fa-cogs");
+        parameterCompanySubProduct.setParent(parameterMenu);
+        parameterCompanySubProduct.setIndex(3);
+        robeMenuRepository.save(parameterCompanySubProduct);
+
         /**
          * İZİN İŞLEMLERİ
          * add manager module permission to admin role
          */
+        Permission permissionParameterTypeMenu = new Permission();
+        permissionParameterTypeMenu.setPermissionType(PermissionType.MENU);
+        permissionParameterTypeMenu.setMenu(parameterTypeMenu);
+        permissionParameterTypeMenu.setRole(roleGroup);
+        permissionRepository.save(permissionParameterTypeMenu);
+
+        Permission permissionParameterCodeMenu = new Permission();
+        permissionParameterCodeMenu.setPermissionType(PermissionType.MENU);
+        permissionParameterCodeMenu.setMenu(parameterCodeMenu);
+        permissionParameterCodeMenu.setRole(roleGroup);
+        permissionRepository.save(permissionParameterCodeMenu);
+
+        Permission permissionparameterCompanySubProduct = new Permission();
+        permissionparameterCompanySubProduct.setPermissionType(PermissionType.MENU);
+        permissionparameterCompanySubProduct.setMenu(parameterCompanySubProduct);
+        permissionparameterCompanySubProduct.setRole(roleGroup);
+        permissionRepository.save(permissionparameterCompanySubProduct);
+
+
 
         // customer menüsüne, rolü admin olanlara yetki verir.
         Permission permissionCustomer = new Permission();
         permissionCustomer.setPermissionType(PermissionType.MENU);
         permissionCustomer.setMenu(customerMenu);
         permissionCustomer.setRole(roleGroup);
-
         permissionRepository.save(permissionCustomer);
+
+        Permission permissionPolice = new Permission();
+        permissionPolice.setPermissionType(PermissionType.MENU);
+        permissionPolice.setMenu(policeMenu);
+        permissionPolice.setRole(roleGroup);
+        permissionRepository.save(permissionPolice);
+
+        Permission permissionParameter = new Permission();
+        permissionParameter.setPermissionType(PermissionType.MENU);
+        permissionParameter.setMenu(parameterMenu);
+        permissionParameter.setRole(roleGroup);
+        permissionRepository.save(permissionParameter);
 
         Permission permissionManager = new Permission();
         permissionManager.setPermissionType(PermissionType.MENU);
@@ -266,12 +339,35 @@ public class InitialCommand {
         permissionController.setPermissionGroup("permissionController");
         permissionController.setRole(roleGroup);
         permissionController.setPermissionType(PermissionType.REST);
-
         permissionRepository.save(permissionController);
 
-        Company company2 = new Company();
-        company2.setName("Hayat Sigorta");
+        Company company1 = companyDao.getNew();
+        company1.setName("Anadolu Sigorta");
+        companyDao.create(company1);
+
+        Company company2 = companyDao.getNew();
+        company2.setName("Ak Sigorta");
         companyDao.create(company2);
+
+        CompanyProduct companyProduct1 = companyProductDao.getNew();
+        companyProduct1.setCompany(company1);
+        companyProduct1.setName("Araç");
+        companyProductDao.create(companyProduct1);
+
+        CompanyProduct companyProduct2 = companyProductDao.getNew();
+        companyProduct2.setCompany(company1);
+        companyProduct2.setName("Konut Sigortası");
+        companyProductDao.create(companyProduct2);
+
+        CompanySubProduct companySubProduct1 = companySubProductDao.getNew();
+        companySubProduct1.setCompanyProduct(companyProduct1);
+        companySubProduct1.setName("Trafik Sigortası");
+        companySubProductDao.create(companySubProduct1);
+
+        CompanySubProduct companySubProduct2 = companySubProductDao.getNew();
+        companySubProduct2.setCompanyProduct(companyProduct1);
+        companySubProduct2.setName("Tam Bakım Trafik Sigortası");
+        companySubProductDao.create(companySubProduct2);
 
         Customer customer1 = new Customer();
         customer1.setEmail("aaa@aaa.aaa");
@@ -280,7 +376,7 @@ public class InitialCommand {
         customer1.setName("Kamil");
         customer1.setSurname("Baş");
         customer1.setTc(12212323323L);
-        customer1.setCompanyUser(user);
+        customer1.setAgencyUser(user);
         customerDao.create(customer1);
 
         Customer customer2 = new Customer();
@@ -290,7 +386,7 @@ public class InitialCommand {
         customer2.setName("Cafer");
         customer2.setSurname("Taş");
         customer2.setTc(12212323323L);
-        customer2.setCompanyUser(user);
+        customer2.setAgencyUser(user);
         customerDao.create(customer2);
 
     }

@@ -1,6 +1,6 @@
 package com.tr.sigorta.web.controller;
 
-import com.tr.sigorta.dao.CompanyUserDao;
+import com.tr.sigorta.dao.AgencyUserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,5 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class CompanyUserController {
 
     @Autowired
-    CompanyUserDao companyUserDao;
+    AgencyUserDao agencyUserDao;
+
 }
