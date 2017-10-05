@@ -29,10 +29,12 @@ public class Policy extends BaseEntity {
     private CompanyProduct companyProduct;
     @ManyToOne(fetch = FetchType.EAGER)
     private CompanySubProduct companySubProduct;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "tr_TR")
     private Date startDate; // poliçe başlangıç tarihi
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "tr_TR")
     private Date endDate; // poliçe bitiş tarihi
     private String description; // açıklama
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "EET")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "tr_TR")
     private Date reminderDate; // hatırlatma tarihi; mesajın veya mailin gönderileceği tarih.
     private String userMessage; // kullaniciya gidecek mesaj.
     private String customerMessage; // müşteriye gidecek mesaj.

@@ -58,35 +58,51 @@ public class InitialCommand {
         roleGroup.setCode("ADMIN");
         robeRoleRepository.save(roleGroup);
 
-        Role roleGroupCompanyUser = new Role();
-        roleGroupCompanyUser.setName("user");
-        roleGroupCompanyUser.setCode("USER");
-        robeRoleRepository.save(roleGroupCompanyUser);
+        Role roleGroupAgencyUser = new Role();
+        roleGroupAgencyUser.setName("user");
+        roleGroupAgencyUser.setCode("AGENCY_USER");
+        robeRoleRepository.save(roleGroupAgencyUser);
+
+        Role roleGroupAgencyAdmin = new Role();
+        roleGroupAgencyAdmin.setName("Admin");
+        roleGroupAgencyAdmin.setCode("AGENCY_ADMIN");
+        robeRoleRepository.save(roleGroupAgencyAdmin);
 
         Agency agency1 = new Agency();
-        agency1.setName("Beşler Sigorta");
+        agency1.setName("Demo Sigorta");
         agencyDao.create(agency1);
 
-        AgencyUser user = new AgencyUser();
-        user.setAgency(agency1);
-        user.setOid(1L);
-        user.setUsername("admin");
-        user.setPassword("96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e");
-        user.setActive(true);
-        user.setName("admin");
-        user.setSurname("admin");
-        user.setRole(roleGroup);
-        agencyUserDao.create(user);
-        robeUserRepository.save(user);
+        AgencyUser agencyUserQ = new AgencyUser();
+        agencyUserQ.setUsername("admin");
+        agencyUserQ.setPassword("96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e");
+        agencyUserQ.setActive(true);
+        agencyUserQ.setRole(roleGroup);
+        agencyUserQ.setName("admin");
+        agencyUserQ.setSurname("admin");
+        agencyUserQ.setAgency(agency1);
+        agencyUserQ.setMobilePhone(5433148674L);
+        agencyUserQ.setEmail("mustafaerbin@hotmail.com");
+        robeUserRepository.save(agencyUserQ);
 
-        User companyUser = new User();
-        companyUser.setUsername("user");
-        companyUser.setPassword("96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e");
-        companyUser.setActive(true);
-        companyUser.setName("user");
-        companyUser.setSurname("user");
-        companyUser.setRole(roleGroupCompanyUser);
-        robeUserRepository.save(companyUser);
+        AgencyUser agencyUserNebula = new AgencyUser();
+        agencyUserNebula.setUsername("agencyUser");
+        agencyUserNebula.setPassword("96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e");
+        agencyUserNebula.setActive(true);
+        agencyUserNebula.setName("User");
+        agencyUserNebula.setSurname("User");
+        agencyUserNebula.setRole(roleGroupAgencyUser);
+        agencyUserNebula.setAgency(agency1);
+        robeUserRepository.save(agencyUserNebula);
+
+        AgencyUser agencyAdminNebula = new AgencyUser();
+        agencyAdminNebula.setUsername("agencyAdmin");
+        agencyAdminNebula.setPassword("96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e");
+        agencyAdminNebula.setActive(true);
+        agencyAdminNebula.setName("Admin");
+        agencyAdminNebula.setSurname("Admin");
+        agencyAdminNebula.setRole(roleGroupAgencyAdmin);
+        agencyAdminNebula.setAgency(agency1);
+        robeUserRepository.save(agencyAdminNebula);
 
         Menu managerMenu = new Menu();
         managerMenu.setText("Manager");
@@ -102,7 +118,7 @@ public class InitialCommand {
         userMenu.setModule("User");
         userMenu.setIcon("fa-users");
         userMenu.setParent(managerMenu);
-        userMenu.setIndex(1);
+        userMenu.setIndex(2);
         robeMenuRepository.save(userMenu);
 
         Menu roleMenu = new Menu();
@@ -236,8 +252,6 @@ public class InitialCommand {
         permissionparameterCompanySubProduct.setMenu(parameterCompanySubProduct);
         permissionparameterCompanySubProduct.setRole(roleGroup);
         permissionRepository.save(permissionparameterCompanySubProduct);
-
-
 
         // customer menüsüne, rolü admin olanlara yetki verir.
         Permission permissionCustomer = new Permission();
@@ -376,7 +390,7 @@ public class InitialCommand {
         customer1.setName("Kamil");
         customer1.setSurname("Baş");
         customer1.setTc(12212323323L);
-        customer1.setAgencyUser(user);
+        customer1.setAgencyUser(agencyUserQ);
         customerDao.create(customer1);
 
         Customer customer2 = new Customer();
@@ -386,7 +400,7 @@ public class InitialCommand {
         customer2.setName("Cafer");
         customer2.setSurname("Taş");
         customer2.setTc(12212323323L);
-        customer2.setAgencyUser(user);
+        customer2.setAgencyUser(agencyUserQ);
         customerDao.create(customer2);
 
     }

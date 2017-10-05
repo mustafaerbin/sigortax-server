@@ -1,11 +1,9 @@
 package com.tr.sigorta.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tr.nebula.persistence.jpa.domain.BaseEntity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -15,11 +13,27 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class CompanyProduct extends BaseEntity {
 
+    @Id
+    @Column
+    @GeneratedValue
+    @JsonProperty("value")
+    private Long id;
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private Company company;
+    @JsonProperty("label")
     private String name;
     private Boolean status = true;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Company getCompany() {
         return company;

@@ -22,7 +22,7 @@ public class CompanyDao extends BaseDaoImpl<Company, Long> {
     public List<Company> findAllStatusTrue() {
         List<Company> resultList = null;
         try {
-            Query query = entityManager.createQuery("from Company o where o.status=1");
+            Query query = entityManager.createQuery("from Company o where o.status=1 order by name asc");
             resultList = query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();

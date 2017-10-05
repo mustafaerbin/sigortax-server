@@ -9,4 +9,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AgencyUserDao extends BaseDaoImpl<AgencyUser, Long> {
+
+    public AgencyUser getNew() {
+        return new AgencyUser();
+    }
 }

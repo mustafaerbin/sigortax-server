@@ -1,11 +1,9 @@
 package com.tr.sigorta.web.controller;
 
 import com.tr.nebula.security.api.model.SessionUser;
-import com.tr.sigorta.dao.CompanyDao;
 import com.tr.sigorta.domain.Company;
 import com.tr.sigorta.domain.CompanyProduct;
 import com.tr.sigorta.domain.CompanySubProduct;
-import com.tr.sigorta.domain.Customer;
 import com.tr.sigorta.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
