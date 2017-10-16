@@ -27,7 +27,6 @@ public class AgencyUser extends User {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "agency")
-    @JsonBackReference
     private Agency agency; // acentesi
     private String email;
     private Long mobilePhone;

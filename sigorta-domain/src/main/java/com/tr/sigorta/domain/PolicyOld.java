@@ -32,7 +32,6 @@ public class PolicyOld extends BaseEntity {
     private Date startDate; // poliçe başlangıç tarihi
     private Date endDate; // poliçe bitiş tarihi
     private String description; // açıklama
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "EET")
     private Date reminderDate; // hatırlatma tarihi; mesajın veya mailin gönderileceği tarih.
     private String userMessage; // kullaniciya gidecek mesaj.
     private String customerMessage; // müşteriye gidecek mesaj.

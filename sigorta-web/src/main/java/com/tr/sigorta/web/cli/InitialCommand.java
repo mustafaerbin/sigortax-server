@@ -50,9 +50,13 @@ public class InitialCommand {
     @Autowired
     private AgencyDao agencyDao;
 
+    @Autowired
+    private JobControlDao jobControlDao;
+
 
     public void run() {
 
+        /*
         Role roleGroup = new Role();
         roleGroup.setName("Admin");
         roleGroup.setCode("ADMIN");
@@ -174,9 +178,9 @@ public class InitialCommand {
         showcaseMenu.setIndex(6);
         robeMenuRepository.save(showcaseMenu);
 
-        /**
-         * MENU İŞLEMLERİ
-         */
+
+         //MENU İŞLEMLERİ
+
         Menu customerMenu = new Menu();
         customerMenu.setText("Müşteri Yönetimi");
         customerMenu.setPath("site/customer/Customer");
@@ -194,6 +198,33 @@ public class InitialCommand {
         policeMenu.setParent(siteMenu);
         policeMenu.setIndex(2);
         robeMenuRepository.save(policeMenu);
+
+        Menu oldPoliceMenu = new Menu();
+        oldPoliceMenu.setText("Geçmiş Poliçeler");
+        oldPoliceMenu.setPath("site/oldPolicy/OldPolicy");
+        oldPoliceMenu.setModule("OldPolicy");
+        oldPoliceMenu.setIcon("fa-file-text-o");
+        oldPoliceMenu.setParent(siteMenu);
+        oldPoliceMenu.setIndex(3);
+        robeMenuRepository.save(oldPoliceMenu);
+
+        Menu agencyMenu = new Menu();
+        agencyMenu.setText("Acente Yönetimi");
+        agencyMenu.setPath("manager/agency/Agency");
+        agencyMenu.setModule("Agency");
+        agencyMenu.setIcon("fa-users");
+        agencyMenu.setParent(managerMenu);
+        agencyMenu.setIndex(5);
+        robeMenuRepository.save(agencyMenu);
+
+        Menu agencyUserMenu = new Menu();
+        agencyUserMenu.setText("Acente Kullanıcı Yönetimi");
+        agencyUserMenu.setPath("manager/agencyUser/AgencyUser");
+        agencyUserMenu.setModule("AgencyUser");
+        agencyUserMenu.setIcon("fa-users");
+        agencyUserMenu.setParent(managerMenu);
+        agencyUserMenu.setIndex(6);
+        robeMenuRepository.save(agencyUserMenu);
 
         //ANA MANU PARAMETRELER
         Menu parameterMenu = new Menu();
@@ -231,10 +262,6 @@ public class InitialCommand {
         parameterCompanySubProduct.setIndex(3);
         robeMenuRepository.save(parameterCompanySubProduct);
 
-        /**
-         * İZİN İŞLEMLERİ
-         * add manager module permission to admin role
-         */
         Permission permissionParameterTypeMenu = new Permission();
         permissionParameterTypeMenu.setPermissionType(PermissionType.MENU);
         permissionParameterTypeMenu.setMenu(parameterTypeMenu);
@@ -266,6 +293,12 @@ public class InitialCommand {
         permissionPolice.setRole(roleGroup);
         permissionRepository.save(permissionPolice);
 
+        Permission permissionOldPolice = new Permission();
+        permissionOldPolice.setPermissionType(PermissionType.MENU);
+        permissionOldPolice.setMenu(oldPoliceMenu);
+        permissionOldPolice.setRole(roleGroup);
+        permissionRepository.save(permissionOldPolice);
+
         Permission permissionParameter = new Permission();
         permissionParameter.setPermissionType(PermissionType.MENU);
         permissionParameter.setMenu(parameterMenu);
@@ -283,8 +316,19 @@ public class InitialCommand {
         permissionUser.setPermissionType(PermissionType.MENU);
         permissionUser.setMenu(userMenu);
         permissionUser.setRole(roleGroup);
-
         permissionRepository.save(permissionUser);
+
+        Permission permissionAgency = new Permission();
+        permissionAgency.setPermissionType(PermissionType.MENU);
+        permissionAgency.setMenu(agencyMenu);
+        permissionAgency.setRole(roleGroup);
+        permissionRepository.save(permissionAgency);
+
+        Permission permissionAgencyUser = new Permission();
+        permissionAgencyUser.setPermissionType(PermissionType.MENU);
+        permissionAgencyUser.setMenu(agencyUserMenu);
+        permissionAgencyUser.setRole(roleGroup);
+        permissionRepository.save(permissionAgencyUser);
 
         Permission permissionRole = new Permission();
         permissionRole.setPermissionType(PermissionType.MENU);
@@ -355,34 +399,6 @@ public class InitialCommand {
         permissionController.setPermissionType(PermissionType.REST);
         permissionRepository.save(permissionController);
 
-        Company company1 = companyDao.getNew();
-        company1.setName("Anadolu Sigorta");
-        companyDao.create(company1);
-
-        Company company2 = companyDao.getNew();
-        company2.setName("Ak Sigorta");
-        companyDao.create(company2);
-
-        CompanyProduct companyProduct1 = companyProductDao.getNew();
-        companyProduct1.setCompany(company1);
-        companyProduct1.setName("Araç");
-        companyProductDao.create(companyProduct1);
-
-        CompanyProduct companyProduct2 = companyProductDao.getNew();
-        companyProduct2.setCompany(company1);
-        companyProduct2.setName("Konut Sigortası");
-        companyProductDao.create(companyProduct2);
-
-        CompanySubProduct companySubProduct1 = companySubProductDao.getNew();
-        companySubProduct1.setCompanyProduct(companyProduct1);
-        companySubProduct1.setName("Trafik Sigortası");
-        companySubProductDao.create(companySubProduct1);
-
-        CompanySubProduct companySubProduct2 = companySubProductDao.getNew();
-        companySubProduct2.setCompanyProduct(companyProduct1);
-        companySubProduct2.setName("Tam Bakım Trafik Sigortası");
-        companySubProductDao.create(companySubProduct2);
-
         Customer customer1 = new Customer();
         customer1.setEmail("aaa@aaa.aaa");
         customer1.setJob("Serbest Meslek");
@@ -403,11 +419,61 @@ public class InitialCommand {
         customer2.setAgencyUser(agencyUserQ);
         customerDao.create(customer2);
 
-    }
+        saveCampanyAndProducts();
 
+        */
+
+        saveData();
+    }
 
     private void saveData() {
 
+        /*
+        JobControl jobControlPolicy = jobControlDao.getNew();
+        jobControlPolicy.setCode("policy");
+        jobControlPolicy.setStatus(true);
+        jobControlPolicy.setDescription("Bitiş tarihi geçmiş poliçeleri kapatır., her ayın ilk pazartesi çalışır");
+        jobControlPolicy.setCron("0 0 2 ? 1/1 MON#1 *");
+        jobControlDao.create(jobControlPolicy);
+
+        JobControl jobControlMessageMail = jobControlDao.getNew();
+        jobControlMessageMail.setCode("message");
+        jobControlMessageMail.setStatus(true);
+        jobControlMessageMail.setDescription("Bitiş tarihi yaklamış poliçeleri kullanıcıya mail gönderir., her gün sabah 7 de çalışır");
+        jobControlMessageMail.setCron("0 0 7 1/1 * ? *");
+        jobControlDao.create(jobControlMessageMail);
+        */
+    }
+
+    private void saveCampanyAndProducts() {
+
+        Company companyAnadolu = companyDao.getNew();
+        companyAnadolu.setName("Anadolu Sigorta");
+        companyDao.create(companyAnadolu);
+
+        Company companyAK = companyDao.getNew();
+        companyAK.setName("Ak Sigorta");
+        companyDao.create(companyAK);
+
+        CompanyProduct companyProductAnadoluArac = companyProductDao.getNew();
+        companyProductAnadoluArac.setCompany(companyAnadolu);
+        companyProductAnadoluArac.setName("Araç");
+        companyProductDao.create(companyProductAnadoluArac);
+
+        CompanyProduct companyProductAnadoluKonut = companyProductDao.getNew();
+        companyProductAnadoluKonut.setCompany(companyAnadolu);
+        companyProductAnadoluKonut.setName("Konut Sigortası");
+        companyProductDao.create(companyProductAnadoluKonut);
+
+        CompanySubProduct companySubProductTrafih = companySubProductDao.getNew();
+        companySubProductTrafih.setCompanyProduct(companyProductAnadoluArac);
+        companySubProductTrafih.setName("Trafik Sigortası");
+        companySubProductDao.create(companySubProductTrafih);
+
+        CompanySubProduct companySubProductTamBakim = companySubProductDao.getNew();
+        companySubProductTamBakim.setCompanyProduct(companyProductAnadoluArac);
+        companySubProductTamBakim.setName("Tam Bakım Trafik Sigortası");
+        companySubProductDao.create(companySubProductTamBakim);
 
     }
 
