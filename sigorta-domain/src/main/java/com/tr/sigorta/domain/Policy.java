@@ -6,6 +6,7 @@ import com.tr.nebula.persistence.jpa.domain.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -38,6 +39,18 @@ public class Policy extends BaseEntity {
     private String policyNumber; // poliçe numarası.
     private BigDecimal policyEmount; // poliçe tutarı.
     private Long agencyId; // sigorta şirketi id'si (acente admini bütün kullanıcıların kestiği poliçeleri görebilmesi için eklendi.)
+    @Transient
+    private String agencyUserFullName;
+    @Transient
+    private String customerFullName;
+
+    public String getCustomerFullName() {
+        return customer.getName() + " " + customer.getSurname();
+    }
+
+    public String getAgencyUserFullName() {
+        return agencyUser.getName() + " " + agencyUser.getSurname();
+    }
 
     public AgencyUser getAgencyUser() {
         return agencyUser;

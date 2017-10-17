@@ -20,6 +20,11 @@ public class CompanyController {
     @Autowired
     CompanyService companyService;
 
+    @GetMapping(value = "/all")
+    public List<Company> findAll() {
+        return companyService.findAll();
+    }
+
     @GetMapping
     public List<Company> findAllStatusTrue() {
         return companyService.findAllStatusTrue();

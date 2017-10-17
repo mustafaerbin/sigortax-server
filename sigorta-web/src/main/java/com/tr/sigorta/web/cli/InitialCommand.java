@@ -1,5 +1,6 @@
 package com.tr.sigorta.web.cli;
 
+import com.tr.nebula.persistence.api.dao.BaseDao;
 import com.tr.nebula.security.api.domain.PermissionType;
 import com.tr.nebula.security.db.domain.Menu;
 import com.tr.nebula.security.db.domain.Permission;
@@ -52,7 +53,6 @@ public class InitialCommand {
 
     @Autowired
     private JobControlDao jobControlDao;
-
 
     public void run() {
 
