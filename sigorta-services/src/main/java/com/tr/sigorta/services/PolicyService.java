@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,9 +46,18 @@ public class PolicyService extends JpaService<Policy, Long> {
                 return policyDao.findAllAgentyAdmin(agencyUser);
             }
             default:
-                return policyDao.findAll(agencyUser);
+                return (List<Policy>) policyDao.findAll();
         }
     }
 
+
+    /**
+     * Bitiş tarihi geçmiş poliçeleri listeler
+     *
+     * @return poliçe listesi
+     */
+    public List<Policy> listPolicyOld(Date today) {
+        return policyDao.listPolicyOld(today);
+    }
 
 }

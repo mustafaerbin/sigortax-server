@@ -7,6 +7,7 @@ import com.tr.sigorta.domain.Policy;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Query;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,6 +50,23 @@ public class PolicyDao extends BaseDaoImpl<Policy, Long> {
         try {
             Query query = entityManager.createQuery("from Policy o where o.agencyId=:agencyId")
                     .setParameter("agencyId", agencyId);
+            resultList = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    /**
+     * Bitiş tarihi geçmiş poliçeleri listeler
+     *
+     * @return poliçe listesi
+     */
+    public List<Policy> listPolicyOld(Date today) {
+        List<Policy> resultList = null;
+        try {
+            Query query = entityManager.createQuery("from Policy o where o.endDate< :today")
+                    .setParameter("today", today);
             resultList = query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();

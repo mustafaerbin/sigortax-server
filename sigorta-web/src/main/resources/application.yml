@@ -31,7 +31,7 @@ nebula:
       cached: false
       type: http # use "classpath" or "filesystem" or "http"
   quartz:
-    scanPackages: [com.tr.nebula.quartz.sample]
+    scanPackages: [com.tr.sigorta.web.jobs]
     properties:
       org.quartz.scheduler.instanceName: QuartzScheduler
       org.quartz.scheduler.instanceId: AUTO

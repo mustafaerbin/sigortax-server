@@ -1,11 +1,11 @@
 package com.tr.sigorta.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tr.nebula.persistence.jpa.domain.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -17,18 +17,12 @@ import java.util.Date;
 @Entity
 public class PolicyOld extends BaseEntity {
 
-    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     private AgencyUser agencyUser; // acente kullanıcısı
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Customer customer; // acente müşterisi
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Company company;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private CompanyProduct companyProduct;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private CompanySubProduct companySubProduct;
+    private String customer; // acente müşterisi
+    private String company;
+    private String companyProduct;
+    private String companySubProduct;
     private Date startDate; // poliçe başlangıç tarihi
     private Date endDate; // poliçe bitiş tarihi
     private String description; // açıklama
@@ -38,6 +32,12 @@ public class PolicyOld extends BaseEntity {
     private String policyNumber; // poliçe numarası.
     private BigDecimal policyEmount; // poliçe tutarı.
     private Long agencyId; // sigorta şirketi id'si (acente admini bütün kullanıcıların kestiği poliçeleri görebilmesi için eklendi.)
+    @Transient
+    private String agencyUserFullName;
+
+    public String getAgencyUserFullName() {
+        return agencyUser.getName() + " " + agencyUser.getSurname();
+    }
 
     public AgencyUser getAgencyUser() {
         return agencyUser;
@@ -47,35 +47,35 @@ public class PolicyOld extends BaseEntity {
         this.agencyUser = agencyUser;
     }
 
-    public Customer getCustomer() {
+    public String getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(String customer) {
         this.customer = customer;
     }
 
-    public Company getCompany() {
+    public String getCompany() {
         return company;
     }
 
-    public void setCompany(Company company) {
+    public void setCompany(String company) {
         this.company = company;
     }
 
-    public CompanyProduct getCompanyProduct() {
+    public String getCompanyProduct() {
         return companyProduct;
     }
 
-    public void setCompanyProduct(CompanyProduct companyProduct) {
+    public void setCompanyProduct(String companyProduct) {
         this.companyProduct = companyProduct;
     }
 
-    public CompanySubProduct getCompanySubProduct() {
+    public String getCompanySubProduct() {
         return companySubProduct;
     }
 
-    public void setCompanySubProduct(CompanySubProduct companySubProduct) {
+    public void setCompanySubProduct(String companySubProduct) {
         this.companySubProduct = companySubProduct;
     }
 
