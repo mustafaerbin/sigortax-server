@@ -60,4 +60,13 @@ public class PolicyService extends JpaService<Policy, Long> {
         return policyDao.listPolicyOld(today);
     }
 
+    /**
+     * Hatırlatma tarihi gelmiş poliçeleri listeler.
+     *
+     * @return poliçe listesi
+     */
+    public List<Policy> listPolicyReminderDate(Date today) {
+        return policyDao.listPolicyReminderDate(today);
+    }
+
 }

@@ -73,4 +73,21 @@ public class PolicyDao extends BaseDaoImpl<Policy, Long> {
         }
         return resultList;
     }
+
+    /**
+     * Hatırlatma tarihi gelmiş poliçeleri listeler.
+     *
+     * @return poliçe listesi
+     */
+    public List<Policy> listPolicyReminderDate(Date today) {
+        List<Policy> resultList = null;
+        try {
+            Query query = entityManager.createQuery("from Policy o where o.reminderDate< :today")
+                    .setParameter("today", today);
+            resultList = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
 }
