@@ -22,11 +22,11 @@ import java.util.List;
  * Created by Mustafa Erbin on 12/10/2017.
  * Bitiş tarihi yaklaşmış poliçeleri, kullanıcıya mail gönderir.
  */
-@NebulaJob(name = "AgencyMessageJob", description = "Mail job.", triggers = {
+@NebulaJob(name = "AgencyMailJob", description = "Mail job.", triggers = {
         @NebulaTrigger(cron = "0 0 7 1/1 * ? *", name = "her gün sabah 7", group = "jobs", type = TriggerInfo.Type.CRON),
         @NebulaTrigger(name = "On App Start", group = "Sample", type = TriggerInfo.Type.ON_APP_START)
 })
-public class AgencyMessageJob implements Job {
+public class AgencyMailJob implements Job {
 
     @Autowired
     JobControlDao jobControlDao;
@@ -47,16 +47,19 @@ public class AgencyMessageJob implements Job {
         JobControl jobControl = jobControlDao.findJobControlByCode("message");
         if (jobControl.isStatus()) {
             List<Policy> policyList = policyService.listPolicyReminderDate(dateService.getToday());
-
+            for (Policy policy : policyList) {
+                sendMail(policy.getUserMessage(), policy.getAgencyUser().getEmail());
+            }
         }
     }
 
-    public void sendMail() {
+    public void sendMail(String reminderMessage, String receiversMail) {
 
         MailItem item = new MailItem();
-        item.setBody("<h1>Hello world</h1>");
+        String messageBody = "<h1>" + reminderMessage + "</h1>";
+        item.setBody(messageBody);
         item.setTitle("Poliçe Hatırlatma");
-        item.setReceivers("name.surname@company.com");
+        item.setReceivers(receiversMail);
         item.setEvent(new Event());
         nebulaMailSender.sendMail(item);
     }

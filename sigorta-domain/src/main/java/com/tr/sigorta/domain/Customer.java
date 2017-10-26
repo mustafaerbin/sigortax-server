@@ -27,6 +27,15 @@ public class Customer extends BaseEntity {
     private String job;
     private Boolean status = true; // 1 --> aktif, 0 --> pasif
     private String description; // açıklama
+    private Long agencyId;
+
+    public Long getAgencyId() {
+        return agencyId;
+    }
+
+    public void setAgencyId(Long agencyId) {
+        this.agencyId = agencyId;
+    }
 
     public String getDescription() {
         return description;

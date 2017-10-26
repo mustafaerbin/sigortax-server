@@ -3,6 +3,7 @@ package com.tr.sigorta.dao;
 import com.tr.nebula.persistence.jpa.dao.BaseDaoImpl;
 import com.tr.sigorta.domain.AgencyUser;
 import com.tr.sigorta.domain.Customer;
+import com.tr.sigorta.domain.Policy;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Query;
@@ -32,4 +33,22 @@ public class CustomerDao extends BaseDaoImpl<Customer, Long> {
         return resultList;
     }
 
+    /**
+     * tüm müşteriler, acente admini için
+     *
+     * @param agencyUser login olan kullanıcısı
+     * @return poliçe listesi
+     */
+    public List<Customer> findAllAgentyAdmin(AgencyUser agencyUser) {
+        Long agencyId = agencyUser.getAgency().getId();
+        List<Customer> resultList = null;
+        try {
+            Query query = entityManager.createQuery("from Customer o where o.agencyId=:agencyId")
+                    .setParameter("agencyId", agencyId);
+            resultList = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
 }

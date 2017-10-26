@@ -1,6 +1,5 @@
 package com.tr.sigorta.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tr.nebula.persistence.jpa.domain.BaseEntity;
 
 import javax.persistence.Entity;

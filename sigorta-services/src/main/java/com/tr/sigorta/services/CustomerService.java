@@ -5,6 +5,7 @@ import com.tr.nebula.security.api.model.SessionUser;
 import com.tr.sigorta.dao.CustomerDao;
 import com.tr.sigorta.domain.AgencyUser;
 import com.tr.sigorta.domain.Customer;
+import com.tr.sigorta.domain.Policy;
 import com.tr.sigorta.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,20 +29,31 @@ public class CustomerService extends JpaService<Customer, Long> {
 
     public List<Customer> findAll(SessionUser sessionUser) {
         AgencyUser agencyUser = (AgencyUser) sessionUser.getUser();
-        return customerDao.findAll(agencyUser);
+        switch (agencyUser.getRole().getCode()) {
+            case "AGENCY_USER": {
+                return customerDao.findAll(agencyUser);
+            }
+            case "AGENCY_ADMIN": {
+                return customerDao.findAllAgentyAdmin(agencyUser);
+            }
+            default:
+                return (List<Customer>) customerDao.findAll();
+        }
     }
 
-    public Customer create(SessionUser sessionUser, @RequestBody Customer customer) {
+    public Customer create(SessionUser sessionUser, Customer customer) {
         Customer customer1 = customer;
         AgencyUser agencyUser = (AgencyUser) sessionUser.getUser();
         customer1.setAgencyUser(agencyUser);
+        customer1.setAgencyId(agencyUser.getAgency().getId());
         return customerDao.create(customer1);
     }
 
-    public Customer update(SessionUser sessionUser, @RequestBody Customer customer) {
+    public Customer update(SessionUser sessionUser, Customer customer) {
         Customer customer1 = customer;
         AgencyUser agencyUser = (AgencyUser) sessionUser.getUser();
         customer1.setAgencyUser(agencyUser);
+        customer1.setAgencyId(agencyUser.getAgency().getId());
         return customerDao.update(customer1);
     }
 }
