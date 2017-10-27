@@ -50,7 +50,7 @@ public class AgencyMailJob implements Job {
         if (jobControl.isStatus()) {
             List<Policy> policyList = policyService.listPolicyReminderDate(dateService.getToday());
             for (Policy policy : policyList) {
-                sendMail(policy.getUserMessage() + "</br>" + " Poliçe Sistem Numarası : " + policy.getId(), policy.getAgencyUser().getEmail());
+                sendMail(policy.getUserMessage() + "</br></br>" + " Poliçe Sistem Numarası : " + policy.getId(), policy.getAgencyUser().getEmail());
             }
         }
     }
@@ -58,7 +58,7 @@ public class AgencyMailJob implements Job {
     public void sendMail(String reminderMessage, String receiversMail) {
 
         MailItem item = new MailItem();
-        String messageBody = "<h1>" + reminderMessage + "</h1>";
+        String messageBody = reminderMessage;
         item.setBody(messageBody);
         item.setTitle("Poliçe Hatırlatma Hk.");
         item.setReceivers(receiversMail);

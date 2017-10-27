@@ -52,6 +52,7 @@ public class PolicyOldJob implements Job {
             List<Policy> policyOldList = policyService.listPolicyOld(dateService.getToday());
             PolicyOld policyOld = policyOldDao.getNew();
             for (Policy policy : policyOldList) {
+                policyOld.setId(policy.getId());
                 policyOld.setAgencyUser(policy.getAgencyUser());
                 policyOld.setAgencyId(policy.getAgencyId());
                 policyOld.setCompany(policy.getCompany().getName());

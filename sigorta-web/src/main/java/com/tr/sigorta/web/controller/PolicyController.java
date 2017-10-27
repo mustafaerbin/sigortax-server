@@ -44,6 +44,6 @@ public class PolicyController {
 
     @GetMapping(value = "mail")
     public void sentMail() {
-        agencyMailJob.sendMail("Selam" + "</br>" + " Sistem No : " + 3, "mustafaerbin@hotmail.com");
+        agencyMailJob.sendMail("Selam" + "</br></br>" + " Poliçe Sistem Numarası : " + 3, "mustafaerbin@hotmail.com");
     }
 }

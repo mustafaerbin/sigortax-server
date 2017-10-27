@@ -22,7 +22,7 @@ public class Customer extends BaseEntity {
     private String surname;
     private Long tc;
     private String email;
-    private Long mobilePhone;
+    private String mobilePhone;
     private String address;
     private String job;
     private Boolean status = true; // 1 --> aktif, 0 --> pasif
@@ -93,11 +93,11 @@ public class Customer extends BaseEntity {
         this.email = email;
     }
 
-    public Long getMobilePhone() {
+    public String getMobilePhone() {
         return mobilePhone;
     }
 
-    public void setMobilePhone(Long mobilePhone) {
+    public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
     }
 
