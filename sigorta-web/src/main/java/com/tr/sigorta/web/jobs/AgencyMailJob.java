@@ -15,6 +15,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ import java.util.List;
         @NebulaTrigger(cron = "0 0 7 1/1 * ? *", name = "her gün sabah 7", group = "jobs", type = TriggerInfo.Type.CRON),
         @NebulaTrigger(name = "On App Start", group = "Sample", type = TriggerInfo.Type.ON_APP_START)
 })
+@Service
 public class AgencyMailJob implements Job {
 
     @Autowired
@@ -48,7 +50,7 @@ public class AgencyMailJob implements Job {
         if (jobControl.isStatus()) {
             List<Policy> policyList = policyService.listPolicyReminderDate(dateService.getToday());
             for (Policy policy : policyList) {
-                sendMail(policy.getUserMessage(), policy.getAgencyUser().getEmail());
+                sendMail(policy.getUserMessage() + "</br>" + " Poliçe Sistem Numarası : " + policy.getId(), policy.getAgencyUser().getEmail());
             }
         }
     }
@@ -58,7 +60,7 @@ public class AgencyMailJob implements Job {
         MailItem item = new MailItem();
         String messageBody = "<h1>" + reminderMessage + "</h1>";
         item.setBody(messageBody);
-        item.setTitle("Poliçe Hatırlatma");
+        item.setTitle("Poliçe Hatırlatma Hk.");
         item.setReceivers(receiversMail);
         item.setEvent(new Event());
         nebulaMailSender.sendMail(item);

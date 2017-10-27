@@ -4,6 +4,7 @@ import com.tr.sigorta.dao.AgencyUserDao;
 import com.tr.sigorta.domain.Agency;
 import com.tr.sigorta.domain.AgencyUser;
 import com.tr.sigorta.domain.Company;
+import com.tr.sigorta.services.DateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +20,18 @@ public class AgencyUserController {
     @Autowired
     AgencyUserDao agencyUserDao;
 
+    @Autowired
+    DateService dateService;
+
     @GetMapping
     public List<AgencyUser> findAll() {
         return agencyUserDao.findAll();
+    }
+
+
+    @GetMapping(value = "{id}")
+    public AgencyUser findById(@PathVariable("id") Long id) {
+        return agencyUserDao.findById(id);
     }
 
     @PostMapping
@@ -37,6 +47,16 @@ public class AgencyUserController {
     @RequestMapping(method = RequestMethod.DELETE, value = "{oid}")
     public void delete(@PathVariable("oid") Long id) {
         agencyUserDao.delete(id);
+    }
+
+    @GetMapping(value = "check/{id}")
+    public Boolean checkUser(@PathVariable("id") Long id) {
+        AgencyUser agencyUser = agencyUserDao.findById(id);
+        if (agencyUser.getEndDate() != null &&
+                agencyUser.getEndDate().getTime() < dateService.getToday().getTime()) {
+            return false;
+        } else
+            return true;
     }
 
 }

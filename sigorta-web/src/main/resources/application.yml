@@ -55,10 +55,10 @@ nebula:
       usernameKey: 'mail.smtp.username'
       passwordKey: 'mail.smtp.password'
       properties:
-        mail.smtp.username: test-name
-        mail.smtp.password: test-password
-        mail.smtp.host: smtp.live.com
-        mail.smtp.port: 25
+        mail.smtp.username: bilgi@petrainsaat.com
+        mail.smtp.password: Petra06*
+        mail.smtp.host: mail.petrainsaat.com
+        mail.smtp.port: 26
         mail.smtp.auth: true
         mail.smtp.starttls.enable: true
 
