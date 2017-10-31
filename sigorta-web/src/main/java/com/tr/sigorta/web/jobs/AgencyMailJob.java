@@ -5,7 +5,9 @@ import com.tr.nebula.mail.sender.NebulaMailSender;
 import com.tr.nebula.quartz.NebulaJob;
 import com.tr.nebula.quartz.NebulaTrigger;
 import com.tr.nebula.quartz.info.TriggerInfo;
+import com.tr.sigorta.dao.AgencyUserDao;
 import com.tr.sigorta.dao.JobControlDao;
+import com.tr.sigorta.domain.AgencyUser;
 import com.tr.sigorta.domain.JobControl;
 import com.tr.sigorta.domain.Policy;
 import com.tr.sigorta.services.DateService;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,19 +46,34 @@ public class AgencyMailJob implements Job {
     @Autowired
     DateService dateService;
 
+    @Autowired
+    AgencyUserDao agencyUserDao;
+
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         //sendMail(); message
         JobControl jobControl = jobControlDao.findJobControlByCode("message");
         if (jobControl.isStatus()) {
             List<Policy> policyList = policyService.listPolicyReminderDate(dateService.getToday());
+            List<String> receiversMail = new ArrayList<>();
             for (Policy policy : policyList) {
-                sendMail(policy.getUserMessage() + "</br></br>" + " Poliçe Sistem Numarası : " + policy.getId(), policy.getAgencyUser().getEmail());
+                List<AgencyUser> agencyUsers = agencyUserDao.listAgencyUser(policy.getAgencyUser().getAgency());
+
+                for (AgencyUser agencyUser : agencyUsers) {
+                    if (agencyUser.getRole().getCode().equals("AGENCY_ADMIN") && agencyUser.getSendingMail()) {
+                        receiversMail.add(agencyUser.getEmail());
+                    }
+                }
+                if (policy.getAgencyUser().getSendingMail()) {
+                    receiversMail.add(policy.getAgencyUser().getEmail());
+                }
+                sendMail(policy.getUserMessage() + "</br></br>" + " Müşteri Bilgileri : " + policy.getCustomer().getName(), receiversMail);
+
             }
         }
     }
 
-    public void sendMail(String reminderMessage, String receiversMail) {
+    public void sendMail(String reminderMessage, List<String> receiversMail) {
 
         MailItem item = new MailItem();
         String messageBody = reminderMessage;

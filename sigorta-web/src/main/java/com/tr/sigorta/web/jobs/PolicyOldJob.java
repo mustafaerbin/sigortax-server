@@ -50,25 +50,14 @@ public class PolicyOldJob implements Job {
         JobControl jobControl = jobControlDao.findJobControlByCode("policy");
         if (jobControl.isStatus()) {
             List<Policy> policyOldList = policyService.listPolicyOld(dateService.getToday());
-            PolicyOld policyOld = policyOldDao.getNew();
-            for (Policy policy : policyOldList) {
-                policyOld.setId(policy.getId());
-                policyOld.setAgencyUser(policy.getAgencyUser());
-                policyOld.setAgencyId(policy.getAgencyId());
-                policyOld.setCompany(policy.getCompany().getName());
-                policyOld.setCompanyProduct(policy.getCompanyProduct().getName());
-                policyOld.setCompanySubProduct(policy.getCompanySubProduct().getName());
-                policyOld.setCustomer(policy.getCustomerFullName());
-                policyOld.setCustomerMessage(policy.getCustomerMessage());
-                policyOld.setDescription(policy.getDescription());
-                policyOld.setEndDate(policy.getEndDate());
-                policyOld.setStartDate(policy.getStartDate());
-                policyOld.setPolicyEmount(policy.getPolicyEmount());
-                policyOld.setPolicyNumber(policy.getPolicyNumber());
-                policyOld.setReminderDate(policy.getReminderDate());
-                policyOldDao.create(policyOld);
-                policyService.delete(policy);
+            if (policyOldList.size() > 0) {
+                for (Policy policy : policyOldList) {
+                    PolicyOld policyOld1 = policyService.oldPolicy(policy);
+                    policyOldDao.create(policyOld1);
+                    policyService.delete(policy);
+                }
             }
         }
     }
+
 }

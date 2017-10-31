@@ -27,7 +27,7 @@ public class PolicyOldController {
         AgencyUser agencyUser = (AgencyUser) sessionUser.getUser();
         switch (agencyUser.getRole().getCode()) {
             case "AGENCY_USER": {
-                return policyOldDao.findAll(agencyUser);
+                return policyOldDao.findAllAgentyAdmin(agencyUser);
             }
             case "AGENCY_ADMIN": {
                 return policyOldDao.findAllAgentyAdmin(agencyUser);

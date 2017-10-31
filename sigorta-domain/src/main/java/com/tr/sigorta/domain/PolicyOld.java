@@ -1,5 +1,6 @@
 package com.tr.sigorta.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tr.nebula.persistence.jpa.domain.BaseEntity;
 
 import javax.persistence.Entity;
@@ -23,9 +24,12 @@ public class PolicyOld extends BaseEntity {
     private String company;
     private String companyProduct;
     private String companySubProduct;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+0300")
     private Date startDate; // poliçe başlangıç tarihi
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+0300")
     private Date endDate; // poliçe bitiş tarihi
     private String description; // açıklama
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+0300")
     private Date reminderDate; // hatırlatma tarihi; mesajın veya mailin gönderileceği tarih.
     private String userMessage; // kullaniciya gidecek mesaj.
     private String customerMessage; // müşteriye gidecek mesaj.

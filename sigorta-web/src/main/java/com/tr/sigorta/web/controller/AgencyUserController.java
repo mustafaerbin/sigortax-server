@@ -1,5 +1,6 @@
 package com.tr.sigorta.web.controller;
 
+import com.tr.nebula.security.api.model.SessionUser;
 import com.tr.sigorta.dao.AgencyUserDao;
 import com.tr.sigorta.domain.Agency;
 import com.tr.sigorta.domain.AgencyUser;
@@ -28,7 +29,6 @@ public class AgencyUserController {
         return agencyUserDao.findAll();
     }
 
-
     @GetMapping(value = "{id}")
     public AgencyUser findById(@PathVariable("id") Long id) {
         return agencyUserDao.findById(id);
@@ -49,6 +49,12 @@ public class AgencyUserController {
         agencyUserDao.delete(id);
     }
 
+    /**
+     * Kullanıcının kullanım süresini kontrol eder.
+     *
+     * @param id
+     * @return
+     */
     @GetMapping(value = "check/{id}")
     public Boolean checkUser(@PathVariable("id") Long id) {
         AgencyUser agencyUser = agencyUserDao.findById(id);
@@ -57,6 +63,11 @@ public class AgencyUserController {
             return false;
         } else
             return true;
+    }
+
+    @GetMapping(value = "agencyUser")
+    public AgencyUser getAgencyUser(SessionUser sessionUser) {
+        return (AgencyUser) sessionUser.getUser();
     }
 
 }

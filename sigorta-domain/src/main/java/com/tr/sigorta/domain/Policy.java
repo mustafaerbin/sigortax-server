@@ -1,6 +1,8 @@
 package com.tr.sigorta.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tr.nebula.persistence.jpa.domain.BaseEntity;
+import com.tr.sigorta.domain.enumm.EnumPolicyState;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,19 +31,33 @@ public class Policy extends BaseEntity {
     private CompanyProduct companyProduct;
     @ManyToOne(fetch = FetchType.EAGER)
     private CompanySubProduct companySubProduct;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+0300")
     private Date startDate; // poliçe başlangıç tarihi
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+0300")
     private Date endDate; // poliçe bitiş tarihi
     private String description; // açıklama
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+0300")
     private Date reminderDate; // hatırlatma tarihi; mesajın veya mailin gönderileceği tarih.
     private String userMessage; // kullaniciya gidecek mesaj.
     private String customerMessage; // müşteriye gidecek mesaj.
     private String policyNumber; // poliçe numarası.
     private BigDecimal policyEmount; // poliçe tutarı.
     private Long agencyId; // sigorta şirketi id'si (acente admini bütün kullanıcıların kestiği poliçeleri görebilmesi için eklendi.)
+    private EnumPolicyState enumPolicyState = EnumPolicyState.YENILENMEDI;
+
+
     @Transient
     private String agencyUserFullName;
     @Transient
     private String customerFullName;
+
+    public EnumPolicyState getEnumPolicyState() {
+        return enumPolicyState;
+    }
+
+    public void setEnumPolicyState(EnumPolicyState enumPolicyState) {
+        this.enumPolicyState = enumPolicyState;
+    }
 
     public String getCustomerFullName() {
         return customer.getName() + " " + customer.getSurname();

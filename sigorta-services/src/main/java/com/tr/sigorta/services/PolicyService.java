@@ -3,10 +3,8 @@ package com.tr.sigorta.services;
 import com.tr.nebula.persistence.jpa.services.JpaService;
 import com.tr.nebula.security.api.model.SessionUser;
 import com.tr.sigorta.dao.PolicyDao;
-import com.tr.sigorta.domain.AgencyUser;
-import com.tr.sigorta.domain.Company;
-import com.tr.sigorta.domain.Customer;
-import com.tr.sigorta.domain.Policy;
+import com.tr.sigorta.dao.PolicyOldDao;
+import com.tr.sigorta.domain.*;
 import com.tr.sigorta.repository.PolicyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +23,9 @@ public class PolicyService extends JpaService<Policy, Long> {
     PolicyDao policyDao;
 
     @Autowired
+    PolicyOldDao policyOldDao;
+
+    @Autowired
     public PolicyService(PolicyRepository repository) {
         super(repository);
     }
@@ -40,7 +41,7 @@ public class PolicyService extends JpaService<Policy, Long> {
         AgencyUser agencyUser = (AgencyUser) sessionUser.getUser();
         switch (agencyUser.getRole().getCode()) {
             case "AGENCY_USER": {
-                return policyDao.findAll(agencyUser);
+                return policyDao.findAllAgentyAdmin(agencyUser);
             }
             case "AGENCY_ADMIN": {
                 return policyDao.findAllAgentyAdmin(agencyUser);
@@ -69,4 +70,22 @@ public class PolicyService extends JpaService<Policy, Long> {
         return policyDao.listPolicyReminderDate(today);
     }
 
+    public PolicyOld oldPolicy(Policy policy) {
+        PolicyOld policyOld = policyOldDao.getNew();
+        policyOld.setId(policy.getId());
+        policyOld.setAgencyUser(policy.getAgencyUser());
+        policyOld.setAgencyId(policy.getAgencyId());
+        policyOld.setCompany(policy.getCompany().getName());
+        policyOld.setCompanyProduct(policy.getCompanyProduct().getName());
+        policyOld.setCompanySubProduct(policy.getCompanySubProduct().getName());
+        policyOld.setCustomer(policy.getCustomerFullName());
+        policyOld.setCustomerMessage(policy.getCustomerMessage());
+        policyOld.setDescription(policy.getDescription());
+        policyOld.setEndDate(policy.getEndDate());
+        policyOld.setStartDate(policy.getStartDate());
+        policyOld.setPolicyEmount(policy.getPolicyEmount());
+        policyOld.setPolicyNumber(policy.getPolicyNumber());
+        policyOld.setReminderDate(policy.getReminderDate());
+        return policyOld;
+    }
 }

@@ -31,6 +31,16 @@ public class AgencyUser extends User {
     private String email;
     private Long mobilePhone;
     private Date endDate; // kullanım bitiş tarihi.
+    private Boolean sendingMail = true;
+
+
+    public Boolean getSendingMail() {
+        return sendingMail;
+    }
+
+    public void setSendingMail(Boolean sendingMail) {
+        this.sendingMail = sendingMail;
+    }
 
     public Date getEndDate() {
         return endDate;
