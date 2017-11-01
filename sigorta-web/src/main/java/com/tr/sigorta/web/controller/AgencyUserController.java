@@ -67,7 +67,8 @@ public class AgencyUserController {
 
     @GetMapping(value = "agencyUser")
     public AgencyUser getAgencyUser(SessionUser sessionUser) {
-        return (AgencyUser) sessionUser.getUser();
+        AgencyUser agencyUser = (AgencyUser) sessionUser.getUser();
+        return agencyUserDao.findById(agencyUser.getId());
     }
 
 }

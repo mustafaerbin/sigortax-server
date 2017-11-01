@@ -1,6 +1,7 @@
 package com.tr.sigorta.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tr.nebula.security.db.domain.User;
 
 import javax.persistence.*;
@@ -29,7 +30,7 @@ public class AgencyUser extends User {
     @JoinColumn(name = "agency")
     private Agency agency; // acentesi
     private String email;
-    private Long mobilePhone;
+    private String mobilePhone;
     private Date endDate; // kullanım bitiş tarihi.
     private Boolean sendingMail = true;
 
@@ -58,11 +59,11 @@ public class AgencyUser extends User {
         this.email = email;
     }
 
-    public Long getMobilePhone() {
+    public String getMobilePhone() {
         return mobilePhone;
     }
 
-    public void setMobilePhone(Long mobilePhone) {
+    public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
     }
 
