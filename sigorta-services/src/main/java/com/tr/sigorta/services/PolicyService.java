@@ -47,7 +47,7 @@ public class PolicyService extends JpaService<Policy, Long> {
                 return policyDao.findAllAgentyAdmin(agencyUser);
             }
             default:
-                return (List<Policy>) policyDao.findAll();
+                return (List<Policy>) policyDao.findAllSuperAdmin();
         }
     }
 

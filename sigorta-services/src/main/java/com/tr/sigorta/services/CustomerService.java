@@ -31,7 +31,7 @@ public class CustomerService extends JpaService<Customer, Long> {
         AgencyUser agencyUser = (AgencyUser) sessionUser.getUser();
         switch (agencyUser.getRole().getCode()) {
             case "AGENCY_USER": {
-                return customerDao.findAll(agencyUser);
+                return customerDao.findAllAgentyAdmin(agencyUser);
             }
             case "AGENCY_ADMIN": {
                 return customerDao.findAllAgentyAdmin(agencyUser);

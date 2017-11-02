@@ -48,8 +48,24 @@ public class PolicyDao extends BaseDaoImpl<Policy, Long> {
         Long agencyId = agencyUser.getAgency().getId();
         List<Policy> resultList = null;
         try {
-            Query query = entityManager.createQuery("from Policy o where o.agencyId=:agencyId")
+            Query query = entityManager.createQuery("from Policy o where o.agencyId=:agencyId order by o.createDate desc")
                     .setParameter("agencyId", agencyId);
+            resultList = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    /**
+     * Kullanıcının kaydettiği poliçeleri listesi. acente kullanıcılarının kaydettiği poliçeler, acente admini için
+     *
+     * @return poliçe listesi
+     */
+    public List<Policy> findAllSuperAdmin() {
+        List<Policy> resultList = null;
+        try {
+            Query query = entityManager.createQuery("from Policy o order by o.createDate desc");
             resultList = query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
