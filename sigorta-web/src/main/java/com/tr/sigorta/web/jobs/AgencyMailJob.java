@@ -58,14 +58,11 @@ public class AgencyMailJob implements Job {
             List<String> receiversMail = new ArrayList<>();
             for (Policy policy : policyList) {
                 List<AgencyUser> agencyUsers = agencyUserDao.listAgencyUser(policy.getAgencyUser().getAgency());
-
-                for (AgencyUser agencyUser : agencyUsers) {
-                    if (agencyUser.getRole().getCode().equals("AGENCY_ADMIN") && agencyUser.getSendingMail()) {
-                        receiversMail.add(agencyUser.getEmail());
-                    }
-                }
+                AgencyUser agencyAdmin = getAgencyAdmin(agencyUsers);
                 if (policy.getAgencyUser().getSendingMail()) {
                     receiversMail.add(policy.getAgencyUser().getEmail());
+                    if (agencyAdmin != null && !policy.getAgencyUser().getUsername().equals(agencyAdmin.getUsername()))
+                        receiversMail.add(agencyAdmin.getEmail());
                 }
                 sendMail(policy.getUserMessage() + "</br></br>" + " Müşteri Bilgileri : " + policy.getCustomer().getName(), receiversMail);
 
@@ -82,5 +79,14 @@ public class AgencyMailJob implements Job {
         item.setReceivers(receiversMail);
         item.setEvent(new Event());
         nebulaMailSender.sendMail(item);
+    }
+
+    private AgencyUser getAgencyAdmin(List<AgencyUser> agencyUsers) {
+        for (AgencyUser agencyUser : agencyUsers) {
+            if (agencyUser.getRole().getCode().equals("AGENCY_ADMIN") && agencyUser.getSendingMail()) {
+                return agencyUser;
+            }
+        }
+        return null;
     }
 }

@@ -34,6 +34,7 @@ public class PolicyService extends JpaService<Policy, Long> {
         Policy policy = response;
         AgencyUser agencyUser = (AgencyUser) sessionUser.getUser();
         policy.setAgencyUser(agencyUser);
+        policy.setAgencyId(agencyUser.getAgency().getId());
         return policyDao.create(policy);
     }
 
