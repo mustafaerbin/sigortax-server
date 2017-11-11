@@ -10,7 +10,7 @@
 
     <groupId>com.tr.sigorta.web</groupId>
     <artifactId>sigorta-web</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>sigorta-web</name>
 
     <url>http://maven.apache.org</url>
