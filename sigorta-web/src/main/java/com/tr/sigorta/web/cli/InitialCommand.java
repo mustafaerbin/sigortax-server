@@ -56,7 +56,6 @@ public class InitialCommand {
 
     public void run() {
 
-        /*
         Role roleGroup = new Role();
         roleGroup.setName("Admin");
         roleGroup.setCode("ADMIN");
@@ -84,7 +83,7 @@ public class InitialCommand {
         agencyUserQ.setName("admin");
         agencyUserQ.setSurname("admin");
         agencyUserQ.setAgency(agency1);
-        agencyUserQ.setMobilePhone(5433148674L);
+        agencyUserQ.setMobilePhone("5433148674");
         agencyUserQ.setEmail("mustafaerbin@hotmail.com");
         robeUserRepository.save(agencyUserQ);
 
@@ -402,7 +401,7 @@ public class InitialCommand {
         Customer customer1 = new Customer();
         customer1.setEmail("aaa@aaa.aaa");
         customer1.setJob("Serbest Meslek");
-        customer1.setMobilePhone(5465676767L);
+        customer1.setMobilePhone("5465676767");
         customer1.setName("Kamil");
         customer1.setSurname("Baş");
         customer1.setTc(12212323323L);
@@ -412,7 +411,7 @@ public class InitialCommand {
         Customer customer2 = new Customer();
         customer2.setEmail("bbb@bbb.bbb");
         customer2.setJob("Esnaf");
-        customer2.setMobilePhone(5465676767L);
+        customer2.setMobilePhone("5465676767");
         customer2.setName("Cafer");
         customer2.setSurname("Taş");
         customer2.setTc(12212323323L);
@@ -421,14 +420,12 @@ public class InitialCommand {
 
         saveCampanyAndProducts();
 
-        */
 
         saveData();
     }
 
     private void saveData() {
 
-        /*
         JobControl jobControlPolicy = jobControlDao.getNew();
         jobControlPolicy.setCode("policy");
         jobControlPolicy.setStatus(true);
@@ -442,7 +439,6 @@ public class InitialCommand {
         jobControlMessageMail.setDescription("Bitiş tarihi yaklamış poliçeleri kullanıcıya mail gönderir., her gün sabah 7 de çalışır");
         jobControlMessageMail.setCron("0 0 7 1/1 * ? *");
         jobControlDao.create(jobControlMessageMail);
-        */
     }
 
     private void saveCampanyAndProducts() {
@@ -466,12 +462,12 @@ public class InitialCommand {
         companyProductDao.create(companyProductAnadoluKonut);
 
         CompanySubProduct companySubProductTrafih = companySubProductDao.getNew();
-        companySubProductTrafih.setCompanyProduct(companyProductAnadoluArac);
+        //companySubProductTrafih.setCompanyProduct(companyProductAnadoluArac);
         companySubProductTrafih.setName("Trafik Sigortası");
         companySubProductDao.create(companySubProductTrafih);
 
         CompanySubProduct companySubProductTamBakim = companySubProductDao.getNew();
-        companySubProductTamBakim.setCompanyProduct(companyProductAnadoluArac);
+        //companySubProductTamBakim.setCompanyProduct(companyProductAnadoluArac);
         companySubProductTamBakim.setName("Tam Bakım Trafik Sigortası");
         companySubProductDao.create(companySubProductTamBakim);
 

@@ -43,7 +43,7 @@ public class CustomerDao extends BaseDaoImpl<Customer, Long> {
         Long agencyId = agencyUser.getAgency().getId();
         List<Customer> resultList = null;
         try {
-            Query query = entityManager.createQuery("from Customer o where o.agencyId=:agencyId")
+            Query query = entityManager.createQuery("from Customer o where o.agencyId=:agencyId order by o.createDate desc")
                     .setParameter("agencyId", agencyId);
             resultList = query.getResultList();
         } catch (Exception e) {

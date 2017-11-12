@@ -1,6 +1,7 @@
 package com.tr.sigorta.dao;
 
 import com.tr.nebula.persistence.jpa.dao.BaseDaoImpl;
+import com.tr.sigorta.domain.Company;
 import com.tr.sigorta.domain.CompanyProduct;
 import com.tr.sigorta.domain.CompanySubProduct;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,10 @@ public class CompanySubProductDao extends BaseDaoImpl<CompanySubProduct, Long> {
         return new CompanySubProduct();
     }
 
-    public List<CompanySubProduct> listCompanySubProduct(CompanyProduct companyProduct) {
+    public List<CompanySubProduct> listCompanySubProduct(Company companyProduct) {
         List<CompanySubProduct> resultList = null;
         try {
-            Query query = entityManager.createQuery("from CompanySubProduct o where o.companyProduct=:companyProduct")
+            Query query = entityManager.createQuery("from CompanySubProduct o where o.company=:companyProduct")
                     .setParameter("companyProduct", companyProduct);
             resultList = query.getResultList();
         } catch (Exception e) {

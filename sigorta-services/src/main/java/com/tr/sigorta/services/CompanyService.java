@@ -44,7 +44,7 @@ public class CompanyService extends JpaService<Company, Long> {
         return companyProductDao.listCompanyProduct(company);
     }
 
-    public List<CompanySubProduct> listCompanySubProduct(CompanyProduct companyProduct) {
+    public List<CompanySubProduct> listCompanySubProduct(Company companyProduct) {
         return companySubProductDao.listCompanySubProduct(companyProduct);
     }
 }

@@ -51,7 +51,7 @@ public class CompanyController {
     }
 
     @PostMapping(value = "/list-company-sub-product")
-    public List<CompanySubProduct> listCompanySubProduct(@RequestBody CompanyProduct companyProduct) {
+    public List<CompanySubProduct> listCompanySubProduct(@RequestBody Company companyProduct) {
         return companyService.listCompanySubProduct(companyProduct);
     }
 

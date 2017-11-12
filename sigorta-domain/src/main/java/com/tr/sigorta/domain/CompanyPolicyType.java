@@ -8,31 +8,22 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Created by Mustafa Erbin on 30/09/2017.
- * sigorta alt ürünleri.
+ * Sigorta şirketi poliçe türü.
  */
 @Entity
-public class CompanySubProduct extends BaseEntity {
+public class CompanyPolicyType extends BaseEntity {
 
     @Id
     @Column
     @GeneratedValue
     @JsonProperty("value")
     private Long id;
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    private Company company;
     @JsonProperty("label")
     private String name;
     private Boolean status = true;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    private Company company;
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Company getCompany() {
         return company;
@@ -42,19 +33,35 @@ public class CompanySubProduct extends BaseEntity {
         this.company = company;
     }
 
-    public String getName() {
-        return name;
+    public Boolean getStatus() {
+        return status;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public Boolean getStatus() {
-        return status;
-    }
-
     public void setStatus(Boolean status) {
         this.status = status;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setOid(Long oid) {
+        super.setOid(oid);
+    }
+
 }
