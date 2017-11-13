@@ -1,11 +1,9 @@
 package com.tr.sigorta.web.cli;
 
-import com.tr.nebula.persistence.api.dao.BaseDao;
 import com.tr.nebula.security.api.domain.PermissionType;
 import com.tr.nebula.security.db.domain.Menu;
 import com.tr.nebula.security.db.domain.Permission;
 import com.tr.nebula.security.db.domain.Role;
-import com.tr.nebula.security.db.domain.User;
 import com.tr.nebula.security.db.repository.NebulaMenuRepository;
 import com.tr.nebula.security.db.repository.NebulaPermissionRepository;
 import com.tr.nebula.security.db.repository.NebulaRoleRepository;
@@ -43,7 +41,7 @@ public class InitialCommand {
     private CompanyProductDao companyProductDao;
 
     @Autowired
-    private CompanySubProductDao companySubProductDao;
+    private CompanyPolicyTypeDao companySubProductDao;
 
     @Autowired
     private AgencyUserDao agencyUserDao;
@@ -404,7 +402,7 @@ public class InitialCommand {
         customer1.setMobilePhone("5465676767");
         customer1.setName("Kamil");
         customer1.setSurname("Baş");
-        customer1.setTc(12212323323L);
+        customer1.setTc("12212323323");
         customer1.setAgencyUser(agencyUserQ);
         customerDao.create(customer1);
 
@@ -414,7 +412,7 @@ public class InitialCommand {
         customer2.setMobilePhone("5465676767");
         customer2.setName("Cafer");
         customer2.setSurname("Taş");
-        customer2.setTc(12212323323L);
+        customer2.setTc("12212323323");
         customer2.setAgencyUser(agencyUserQ);
         customerDao.create(customer2);
 
@@ -461,15 +459,15 @@ public class InitialCommand {
         companyProductAnadoluKonut.setName("Konut Sigortası");
         companyProductDao.create(companyProductAnadoluKonut);
 
-        CompanySubProduct companySubProductTrafih = companySubProductDao.getNew();
-        //companySubProductTrafih.setCompanyProduct(companyProductAnadoluArac);
-        companySubProductTrafih.setName("Trafik Sigortası");
-        companySubProductDao.create(companySubProductTrafih);
-
-        CompanySubProduct companySubProductTamBakim = companySubProductDao.getNew();
-        //companySubProductTamBakim.setCompanyProduct(companyProductAnadoluArac);
-        companySubProductTamBakim.setName("Tam Bakım Trafik Sigortası");
-        companySubProductDao.create(companySubProductTamBakim);
+//        CompanySubProduct companySubProductTrafih = companySubProductDao.getNew();
+//        //companySubProductTrafih.setCompanyProduct(companyProductAnadoluArac);
+//        companySubProductTrafih.setName("Trafik Sigortası");
+//        companySubProductDao.create(companySubProductTrafih);
+//
+//        CompanySubProduct companySubProductTamBakim = companySubProductDao.getNew();
+//        //companySubProductTamBakim.setCompanyProduct(companyProductAnadoluArac);
+//        companySubProductTamBakim.setName("Tam Bakım Trafik Sigortası");
+//        companySubProductDao.create(companySubProductTamBakim);
 
     }
 

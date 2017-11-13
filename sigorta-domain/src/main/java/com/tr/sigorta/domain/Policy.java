@@ -28,9 +28,7 @@ public class Policy extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private Company company;
     @ManyToOne(fetch = FetchType.EAGER)
-    private CompanyProduct companyProduct;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private CompanySubProduct companySubProduct;
+    private CompanyPolicyType companyPolicyType;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+0300")
     private Date startDate; // poliçe başlangıç tarihi
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+0300")
@@ -44,12 +42,30 @@ public class Policy extends BaseEntity {
     private BigDecimal policyEmount; // poliçe tutarı.
     private Long agencyId; // sigorta şirketi id'si (acente admini bütün kullanıcıların kestiği poliçeleri görebilmesi için eklendi.)
     private EnumPolicyState enumPolicyState = EnumPolicyState.YENILENMEDI;
-
+    private String vehiclePlate; // taşıt plakası.
+    private String registryNumber; // tescil belge no.
 
     @Transient
     private String agencyUserFullName;
     @Transient
     private String customerFullName;
+
+
+    public String getRegistryNumber() {
+        return registryNumber;
+    }
+
+    public void setRegistryNumber(String registryNumber) {
+        this.registryNumber = registryNumber;
+    }
+
+    public String getVehiclePlate() {
+        return vehiclePlate;
+    }
+
+    public void setVehiclePlate(String vehiclePlate) {
+        this.vehiclePlate = vehiclePlate;
+    }
 
     public EnumPolicyState getEnumPolicyState() {
         return enumPolicyState;
@@ -91,20 +107,12 @@ public class Policy extends BaseEntity {
         this.company = company;
     }
 
-    public CompanyProduct getCompanyProduct() {
-        return companyProduct;
+    public CompanyPolicyType getCompanyPolicyType() {
+        return companyPolicyType;
     }
 
-    public void setCompanyProduct(CompanyProduct companyProduct) {
-        this.companyProduct = companyProduct;
-    }
-
-    public CompanySubProduct getCompanySubProduct() {
-        return companySubProduct;
-    }
-
-    public void setCompanySubProduct(CompanySubProduct companySubProduct) {
-        this.companySubProduct = companySubProduct;
+    public void setCompanyPolicyType(CompanyPolicyType companyPolicyType) {
+        this.companyPolicyType = companyPolicyType;
     }
 
     public String getDescription() {

@@ -2,6 +2,7 @@ package com.tr.sigorta.web.controller;
 
 import com.tr.nebula.security.api.model.SessionUser;
 import com.tr.sigorta.domain.Company;
+import com.tr.sigorta.domain.CompanyPolicyType;
 import com.tr.sigorta.domain.CompanyProduct;
 import com.tr.sigorta.domain.CompanySubProduct;
 import com.tr.sigorta.services.CompanyService;
@@ -50,9 +51,9 @@ public class CompanyController {
         return companyService.listCompanyProduct(company);
     }
 
-    @PostMapping(value = "/list-company-sub-product")
-    public List<CompanySubProduct> listCompanySubProduct(@RequestBody Company companyProduct) {
-        return companyService.listCompanySubProduct(companyProduct);
+    @PostMapping(value = "/list-company-policy-type")
+    public List<CompanyPolicyType> listCompanyPolicyType(@RequestBody Company company) {
+        return companyService.listCompanyPolicyType(company);
     }
 
 }

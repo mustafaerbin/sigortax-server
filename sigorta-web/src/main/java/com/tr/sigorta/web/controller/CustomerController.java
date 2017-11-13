@@ -2,6 +2,7 @@ package com.tr.sigorta.web.controller;
 
 import com.tr.nebula.security.api.model.SessionUser;
 import com.tr.sigorta.domain.Customer;
+import com.tr.sigorta.domain.enumm.EnumCustomerType;
 import com.tr.sigorta.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,11 @@ public class CustomerController {
     @RequestMapping(method = RequestMethod.GET)
     public List<Customer> findAll(SessionUser sessionUser) {
         return customerService.findAll(sessionUser);
+    }
+
+    @GetMapping(value = "type/{type}")
+    public List<Customer> listCustomerWityType(@PathVariable("type") EnumCustomerType enumCustomerType, SessionUser sessionUser) {
+        return customerService.listCustomerWityType(enumCustomerType, sessionUser);
     }
 
     @RequestMapping(method = RequestMethod.POST)

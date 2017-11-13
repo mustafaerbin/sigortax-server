@@ -3,16 +3,14 @@ package com.tr.sigorta.services;
 import com.tr.nebula.persistence.jpa.services.JpaService;
 import com.tr.sigorta.dao.CompanyDao;
 import com.tr.sigorta.dao.CompanyProductDao;
-import com.tr.sigorta.dao.CompanySubProductDao;
+import com.tr.sigorta.dao.CompanyPolicyTypeDao;
 import com.tr.sigorta.domain.Company;
+import com.tr.sigorta.domain.CompanyPolicyType;
 import com.tr.sigorta.domain.CompanyProduct;
 import com.tr.sigorta.domain.CompanySubProduct;
-import com.tr.sigorta.domain.Customer;
 import com.tr.sigorta.repository.CompanyRepository;
-import com.tr.sigorta.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class CompanyService extends JpaService<Company, Long> {
     private CompanyProductDao companyProductDao;
 
     @Autowired
-    private CompanySubProductDao companySubProductDao;
+    private CompanyPolicyTypeDao companySubProductDao;
 
     @Autowired
     public CompanyService(CompanyRepository repository) {
@@ -44,7 +42,7 @@ public class CompanyService extends JpaService<Company, Long> {
         return companyProductDao.listCompanyProduct(company);
     }
 
-    public List<CompanySubProduct> listCompanySubProduct(Company companyProduct) {
-        return companySubProductDao.listCompanySubProduct(companyProduct);
+    public List<CompanyPolicyType> listCompanyPolicyType(Company company) {
+        return companySubProductDao.listCompanyPolicyType(company);
     }
 }

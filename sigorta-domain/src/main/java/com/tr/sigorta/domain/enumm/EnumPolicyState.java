@@ -6,6 +6,6 @@ package com.tr.sigorta.domain.enumm;
  */
 public enum EnumPolicyState {
 
-    YENILENDI,
-    YENILENMEDI
+    YENILENDI, //Poliçe Yenilendi
+    YENILENMEDI // Poliçe Yenilenmedi
 }

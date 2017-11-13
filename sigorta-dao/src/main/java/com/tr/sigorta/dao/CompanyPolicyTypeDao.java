@@ -2,6 +2,7 @@ package com.tr.sigorta.dao;
 
 import com.tr.nebula.persistence.jpa.dao.BaseDaoImpl;
 import com.tr.sigorta.domain.Company;
+import com.tr.sigorta.domain.CompanyPolicyType;
 import com.tr.sigorta.domain.CompanyProduct;
 import com.tr.sigorta.domain.CompanySubProduct;
 import org.springframework.stereotype.Service;
@@ -13,17 +14,17 @@ import java.util.List;
  * Created by Mustafa Erbin on 30/09/2017.
  */
 @Service
-public class CompanySubProductDao extends BaseDaoImpl<CompanySubProduct, Long> {
+public class CompanyPolicyTypeDao extends BaseDaoImpl<CompanyPolicyType, Long> {
 
-    public CompanySubProduct getNew() {
-        return new CompanySubProduct();
+    public CompanyPolicyType getNew() {
+        return new CompanyPolicyType();
     }
 
-    public List<CompanySubProduct> listCompanySubProduct(Company companyProduct) {
-        List<CompanySubProduct> resultList = null;
+    public List<CompanyPolicyType> listCompanyPolicyType(Company company) {
+        List<CompanyPolicyType> resultList = null;
         try {
-            Query query = entityManager.createQuery("from CompanySubProduct o where o.company=:companyProduct")
-                    .setParameter("companyProduct", companyProduct);
+            Query query = entityManager.createQuery("from CompanyPolicyType o where o.company=:company order by name asc")
+                    .setParameter("company", company);
             resultList = query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();

@@ -6,6 +6,7 @@ import com.tr.sigorta.dao.CustomerDao;
 import com.tr.sigorta.domain.AgencyUser;
 import com.tr.sigorta.domain.Customer;
 import com.tr.sigorta.domain.Policy;
+import com.tr.sigorta.domain.enumm.EnumCustomerType;
 import com.tr.sigorta.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,20 @@ public class CustomerService extends JpaService<Customer, Long> {
             }
             case "AGENCY_ADMIN": {
                 return customerDao.findAllAgentyAdmin(agencyUser);
+            }
+            default:
+                return (List<Customer>) customerDao.findAll();
+        }
+    }
+
+    public List<Customer> listCustomerWityType(EnumCustomerType enumCustomerType, SessionUser sessionUser) {
+        AgencyUser agencyUser = (AgencyUser) sessionUser.getUser();
+        switch (agencyUser.getRole().getCode()) {
+            case "AGENCY_USER": {
+                return customerDao.listCustomerWityType(agencyUser,enumCustomerType);
+            }
+            case "AGENCY_ADMIN": {
+                return customerDao.listCustomerWityType(agencyUser,enumCustomerType);
             }
             default:
                 return (List<Customer>) customerDao.findAll();

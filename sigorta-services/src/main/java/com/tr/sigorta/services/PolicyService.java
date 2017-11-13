@@ -77,8 +77,7 @@ public class PolicyService extends JpaService<Policy, Long> {
         policyOld.setAgencyUser(policy.getAgencyUser());
         policyOld.setAgencyId(policy.getAgencyId());
         policyOld.setCompany(policy.getCompany().getName());
-        policyOld.setCompanyProduct(policy.getCompanyProduct().getName());
-        policyOld.setCompanySubProduct(policy.getCompanySubProduct().getName());
+        policyOld.setCompanySubProduct(policy.getCompanyPolicyType().getName());
         policyOld.setCustomer(policy.getCustomerFullName());
         policyOld.setCustomerMessage(policy.getCustomerMessage());
         policyOld.setDescription(policy.getDescription());
