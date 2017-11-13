@@ -77,7 +77,7 @@ public class PolicyService extends JpaService<Policy, Long> {
         policyOld.setAgencyUser(policy.getAgencyUser());
         policyOld.setAgencyId(policy.getAgencyId());
         policyOld.setCompany(policy.getCompany().getName());
-        policyOld.setCompanySubProduct(policy.getCompanyPolicyType().getName());
+        policyOld.setCompanyPolicyType(policy.getCompanyPolicyType().getName());
         policyOld.setCustomer(policy.getCustomerFullName());
         policyOld.setCustomerMessage(policy.getCustomerMessage());
         policyOld.setDescription(policy.getDescription());
@@ -86,6 +86,9 @@ public class PolicyService extends JpaService<Policy, Long> {
         policyOld.setPolicyEmount(policy.getPolicyEmount());
         policyOld.setPolicyNumber(policy.getPolicyNumber());
         policyOld.setReminderDate(policy.getReminderDate());
+        policyOld.setRegistryNumber(policy.getRegistryNumber());
+        policyOld.setVehiclePlate(policy.getVehiclePlate());
+        policyOld.setEnumPolicyState(policy.getEnumPolicyState());
         return policyOld;
     }
 }

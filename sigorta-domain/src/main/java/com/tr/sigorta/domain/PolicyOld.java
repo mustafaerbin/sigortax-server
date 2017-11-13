@@ -2,6 +2,7 @@ package com.tr.sigorta.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tr.nebula.persistence.jpa.domain.BaseEntity;
+import com.tr.sigorta.domain.enumm.EnumPolicyState;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,8 +23,7 @@ public class PolicyOld extends BaseEntity {
     private AgencyUser agencyUser; // acente kullanıcısı
     private String customer; // acente müşterisi
     private String company;
-    private String companyProduct;
-    private String companySubProduct;
+    private String companyPolicyType;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+0300")
     private Date startDate; // poliçe başlangıç tarihi
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+0300")
@@ -36,8 +36,43 @@ public class PolicyOld extends BaseEntity {
     private String policyNumber; // poliçe numarası.
     private BigDecimal policyEmount; // poliçe tutarı.
     private Long agencyId; // sigorta şirketi id'si (acente admini bütün kullanıcıların kestiği poliçeleri görebilmesi için eklendi.)
+    private EnumPolicyState enumPolicyState = EnumPolicyState.YENILENMEDI;
+    private String vehiclePlate; // taşıt plakası.
+    private String registryNumber; // tescil belge no.
     @Transient
     private String agencyUserFullName;
+
+    public String getCompanyPolicyType() {
+        return companyPolicyType;
+    }
+
+    public void setCompanyPolicyType(String companyPolicyType) {
+        this.companyPolicyType = companyPolicyType;
+    }
+
+    public EnumPolicyState getEnumPolicyState() {
+        return enumPolicyState;
+    }
+
+    public String getRegistryNumber() {
+        return registryNumber;
+    }
+
+    public String getVehiclePlate() {
+        return vehiclePlate;
+    }
+
+    public void setEnumPolicyState(EnumPolicyState enumPolicyState) {
+        this.enumPolicyState = enumPolicyState;
+    }
+
+    public void setRegistryNumber(String registryNumber) {
+        this.registryNumber = registryNumber;
+    }
+
+    public void setVehiclePlate(String vehiclePlate) {
+        this.vehiclePlate = vehiclePlate;
+    }
 
     public String getAgencyUserFullName() {
         return agencyUser.getName() + " " + agencyUser.getSurname();
@@ -67,21 +102,6 @@ public class PolicyOld extends BaseEntity {
         this.company = company;
     }
 
-    public String getCompanyProduct() {
-        return companyProduct;
-    }
-
-    public void setCompanyProduct(String companyProduct) {
-        this.companyProduct = companyProduct;
-    }
-
-    public String getCompanySubProduct() {
-        return companySubProduct;
-    }
-
-    public void setCompanySubProduct(String companySubProduct) {
-        this.companySubProduct = companySubProduct;
-    }
 
     public String getDescription() {
         return description;
